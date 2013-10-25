@@ -43,7 +43,14 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
 
               contactsListPanel.on("contact:new", function(){
                   //TODO
-                  console.log('code to add a new contact')
+                  require(["apps/contacts/new/new_view"], function (NewView){
+                    var newContact = ContactManager.request("contact:entity:new");
+                    var view = new NewView.Contact({
+                      model : newContact
+                    });
+                    ContactManager.dialogRegion.show(view);
+                  });
+                  console.log('code to add a new contact');
               });
 
               contactsListView.on("itemview:contact:edit", function(childView, model){

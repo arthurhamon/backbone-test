@@ -18,6 +18,10 @@ define(["app",
     View.Panel = Marionette.ItemView.extend({
       template: panelTpl,
 
+      triggers : {
+        'click button.js-new' : 'contact:new'
+      },
+
       ui: {
         criterion: "input.js-filter-criterion"
       },
