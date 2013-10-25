@@ -14,23 +14,26 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
           require(["entities/common"], function(FilteredCollection){
             $.when(fetchingContacts).done(function(contacts){
               var filteredContacts = ContactManager.Entities.FilteredCollection({
-                collection: contacts,
-                filterFunction: function(filterCriterion){
-                  console.log('you should filter me', filterCriterion);
-                  var criterion = filterCriterion.toLowerCase();
+                 collection: contacts,
+                 filterFunction: function(filterCriterion){
 
-                  return function (contact){
-                    console.log(contact);
-                    if(contact.attributes.firstName.toLowerCase().indexOf(criterion) >= 0 || 
-                      contact.attributes.lastName.toLowerCase().indexOf(criterion) >= 0 || 
-                      contact.attributes.phoneNumber.indexOf(criterion) >= 0 )
-                    {
-                      console.log('same name', contact.attributes.firstName);
-                      return contact;
+                  if(filterCriterion.length > 0){
+                    console.log('you should filter me', filterCriterion);
+                    var criterion = filterCriterion.toLowerCase();
+                    return function(contact){
+                      for(key in contact.attributes){
+                        var attr = contact.attributes[key];
+                        if('string' == typeof attr){
+                          
+                          if(attr.toLowerCase().indexOf(filterCriterion) >= 0 ){
+                            return contact;
+                          }
+                        }
+                      }
                     }
                   }
-                }
-              });
+                 }
+               }); 
 
               if(criterion){
                 filteredContacts.filter(criterion);

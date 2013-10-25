@@ -23,7 +23,8 @@ define(["app",
       },
 
       events : {
-        'submit #filter-form' :  'filterPersons'
+        'submit #filter-form' :  'filterPersons',
+        'click .js-delete' : 'deletePersons'
       },
 
       filterPersons : function (e){
@@ -38,7 +39,13 @@ define(["app",
 
       onSetFilterCriterion: function(criterion){
         this.ui.criterion.val(criterion);
-      }
+      },
+
+      deletePersons : function (e){
+        e.preventDefault();
+
+        console.log(e);
+      },
     });
 
     View.Contact = Marionette.ItemView.extend({
