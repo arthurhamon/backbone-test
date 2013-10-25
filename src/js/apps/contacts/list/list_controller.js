@@ -17,6 +17,18 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
                 collection: contacts,
                 filterFunction: function(filterCriterion){
                   console.log('you should filter me', filterCriterion);
+                  var criterion = filterCriterion.toLowerCase();
+
+                  return function (contact){
+                    console.log(contact);
+                    if(contact.attributes.firstName.toLowerCase().indexOf(criterion) >= 0 || 
+                      contact.attributes.lastName.toLowerCase().indexOf(criterion) >= 0 || 
+                      contact.attributes.phoneNumber.indexOf(criterion) >= 0 )
+                    {
+                      console.log('same name', contact.attributes.firstName);
+                      return contact;
+                    }
+                  }
                 }
               });
 

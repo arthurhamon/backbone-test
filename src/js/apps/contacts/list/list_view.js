@@ -19,7 +19,17 @@ define(["app",
       template: panelTpl,
 
       triggers : {
-        'click button.js-new' : 'contact:new'
+        'click button.js-new' : 'contact:new'       
+      },
+
+      events : {
+        'submit #filter-form' :  'filterPersons'
+      },
+
+      filterPersons : function (e){
+        e.preventDefault();
+
+        this.trigger("contacts:filter", $(this.ui.criterion).val());
       },
 
       ui: {
